@@ -1,0 +1,82 @@
+@mixin flexor($disp: flex,
+$dir: row,
+$wrap: null,
+$just: null,
+$align: null
+){
+    display: $disp;
+    flex-direction: $dir;
+    flex-wrap: $wrap;
+    justify-content: $just;
+    align-items: $align;
+    @content
+};
+
+@mixin media-q($screen){
+    $value: map-get($breakpoints, $screen);
+    $mobile: map-get($breakpoints, 'mobile');
+
+    @if $value == null {
+        @error '#{#break} is not a valid media-query name';
+    }
+
+    @else if $value == $mobile {
+        @media(max-width: $value){
+            @content;
+        }
+    }
+
+    @else {
+        @media(min-width: $value){
+            @content;
+        }
+    }
+}
+
+@mixin btn($map){
+    @each $btn, $color in $map{
+        .#{$btn}{
+            background-color: $color;
+        }
+    }
+}
+
+@mixin btn-hvr($map){
+    @each $btn, $color in $map{
+        .#{$btn}:hover{
+            background-color: $color;
+        }
+    }
+}
+
+@mixin flex-basis($map){
+    @each $column, $basis in $map{
+        .#{$column} {
+            flex-basis: $basis;
+        }
+    }
+}
+
+@mixin col-colors($map){
+    @each $column, $color in $map{
+        &.#{$column} {
+            background-color: $color;
+        }
+    }
+}
+
+
+@mixin img($disp: block, 
+$marg-left: auto, 
+$marg-right: auto,
+$marg-top: null,
+$max-width: null,
+$max-height: null){
+    display: $disp;
+    margin-left: $marg-left;
+    margin-right: $marg-right;
+    margin-top: $marg-top;
+    max-width: $max-width; 
+    max-height: $max-height;
+    @content
+}
